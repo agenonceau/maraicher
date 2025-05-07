@@ -1,0 +1,41 @@
+<div class="parcelles-list">
+  <div *ngIf="parcelles$ | async as parcelles; else loading">
+    <p *ngIf="parcelles.length === 0">Aucune parcelle disponible</p>
+
+    <table *ngIf="parcelles.length > 0">
+      <thead>
+        <tr>
+          <th>Nom</th>
+          <th>Longueur (m)</th>
+          <th>Largeur (m)</th>
+          <th>Nombre de bandes</th>
+          <th>Détails</th>
+        </tr>
+      </thead>
+      <tbody>
+        <ng-container *ngFor="let parcelle of parcelles">
+          <tr>
+            <td>{{ parcelle.nom }}</td>
+            <td>{{ parcelle.longueur }}</td>
+            <td>{{ parcelle.largeur }}</td>
+            <td>{{ parcelle.nombreBandes }}</td>
+            <td>
+              <button (click)="toggleDetails(parcelle.id)">
+                {{ expandedParcelleId === parcelle.id ? 'Masquer' : 'Afficher' }}
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="expandedParcelleId === parcelle.id" class="details-row">
+            <td colspan="5">
+              <app-bandes-list [parcelleId]="parcelle.id"></app-bandes-list>
+            </td>
+          </tr>
+        </ng-container>
+      </tbody>
+    </table>
+  </div>
+
+  <ng-template #loading>
+    <div class="loading">Chargement des parcelles...</div>
+  </ng-template>
+</div>

@@ -1,0 +1,34 @@
+<div class="bandes-list">
+    <h3>Bandes de culture</h3>
+
+    <div *ngIf="parcelleDetails$ | async as parcelleDetails; else loading">
+        <p *ngIf="parcelleDetails.bandes.length === 0" class="empty-message">
+            Aucune bande n'est associée à cette parcelle.
+        </p>
+
+        <table *ngIf="parcelleDetails.bandes.length > 0" class="bandes-table">
+            <thead>
+                <tr>
+                    <th>N°</th>
+                    <th>Longueur (m)</th>
+                    <th>Largeur (m)</th>
+                    <th>Surface (m²)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let bande of parcelleDetails.bandes">
+                    <td>{{ bande.numero }}</td>
+                    <td>{{ bande.longueur }}</td>
+                    <td>{{ bande.largeur }}</td>
+                    <td>{{ calculateSurface(bande) | number:'1.2-2' }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <ng-template #loading>
+        <div class="loading-indicator">
+            Chargement des bandes...
+        </div>
+    </ng-template>
+</div>

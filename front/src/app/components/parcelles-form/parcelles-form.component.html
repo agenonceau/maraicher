@@ -1,0 +1,54 @@
+<div class="parcelles-form">
+  <h2>Ajouter une parcelle</h2>
+
+  <form [formGroup]="parcelleForm" (ngSubmit)="onSubmit()" class="form-inline">
+    <div class="form-group">
+      <label for="nom">Nom</label>
+      <input type="text" id="nom" formControlName="nom" placeholder="Nom de la parcelle">
+      <div class="error-message" *ngIf="hasError('nom', 'required')">
+        Le nom est requis
+      </div>
+      <div class="error-message" *ngIf="hasError('nom', 'maxlength')">
+        Le nom ne doit pas dépasser 50 caractères
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="longueur">Longueur (m)</label>
+      <input type="number" id="longueur" formControlName="longueur" placeholder="Longueur en mètres" step="0.1"
+        min="0.1">
+      <div class="error-message" *ngIf="hasError('longueur', 'required')">
+        La longueur est requise
+      </div>
+      <div class="error-message" *ngIf="hasError('longueur', 'min')">
+        La longueur doit être au moins 0.1 m
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="largeur">Largeur (m)</label>
+      <input type="number" id="largeur" formControlName="largeur" placeholder="Largeur en mètres" step="0.1" min="0.1">
+      <div class="error-message" *ngIf="hasError('largeur', 'required')">
+        La largeur est requise
+      </div>
+      <div class="error-message" *ngIf="hasError('largeur', 'min')">
+        La largeur doit être au moins 0.1 m
+      </div>
+    </div>
+
+    <div class="form-submit">
+      <button type="submit" [disabled]="isSubmitting">
+        <span *ngIf="isSubmitting" class="spinner"></span>
+        Ajouter
+      </button>
+    </div>
+  </form>
+
+  <div class="success-message" *ngIf="submitSuccess">
+    Parcelle ajoutée avec succès !
+  </div>
+
+  <div class="error-alert" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+</div>
